@@ -150,9 +150,7 @@ CREATE
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{}
-\subsection{}
-\subsection{The DROP statement}
+\section{The DROP statement}
 This enables you to delete a table that already exists.
 
  DROP TABLE table\_name ;\ \ \ \ 
@@ -168,7 +166,7 @@ e.g.\ \ DROP TABLE CUST ;
 
 You can easily check that a table has been dropped by trying a command that uses it -- any SELECT. The error to the right will show.
 
-\subsection{Oracle recyclebin}
+\section{Oracle recyclebin}
 Oracle 10g introduced the concept of the recyclebin.  Information about objects which have been dropped is placed in a recyclebin data dictionary table.  A dropped object will have an object name like BIN\$45azVqPcJrHgNAADugjeBA==\$0: 
 
 To produce a list of all deleted tables with their original name:
@@ -183,7 +181,8 @@ To permanently remove all of them run the following command:
 
 \ \ PURGE RECYCLEBIN ;
 
-\clearpage\subsection{The INSERT statement}
+\clearpage
+\section{The INSERT statement}
 Values are inserted into a table one row at a time.
 
 INSERT INTO DEPT
@@ -276,7 +275,7 @@ INSERT INTO DEPT
 \end{center}
 \ \ VALUES(70,NULL,'BOSTON') ;
 
-\subsection{Inserting time and date data}
+\section{Inserting time and date data}
 For Date columns:
 
 \ \ INSERT INTO EMP (EMPno, Hiredate)
@@ -327,8 +326,8 @@ INSERT
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{}
-\subsection{Create and run a Script}
+
+\section{Create and run a Script}
 Running individual statements is useful; but sometimes there are a series of instructions to be issued. Re-typing instructions is time-consuming, tedious, and error-prone.
 
 The 'SQL Scripts' feature within the interface provides an alternative: a way of storing lists of instructions in files.  In addition you can upload scripts created in some other editor, and download scripts to use outside of the APEX interface.
@@ -398,8 +397,9 @@ Return to the SQL Scripts screen (Home{\textgreater}SQL Workshop{\textgreater}SQ
 
 E5\ \ Now create a second script for the Drop statements and run that.
 
-\clearpage\subsection{Editing scripts}
-   
+\clearpage
+\section{Editing scripts}
+
 \includegraphics[width=14.9cm,height=3.108cm]{images/img (45).png}
  
 
@@ -409,8 +409,7 @@ Alternatively, it is often convenient to prepare a script away from Oracle and t
 
 To manage your scripts and keep your environment tidy, you may want to move them to an appropriate folder in your work area.
 
-\subsection{}
-\subsection{Downloading and Uploading scripts}
+\section{Downloading and Uploading scripts}
 Download the vehicle script to your work area and save it as vehicle.sql (ensure it has a '.sql' extension). In a text editor, open the file. Use white space (the {\textless}Space{\textgreater}, {\textless}Enter{\textgreater}, and {\textless}Tab{\textgreater} characters) to make the statements clear. Save the file, ensuring its name and extension are correct.
 
 Some editors, like notepad, add an extra .txt extension. You should find a better text editor than notepad -{}-{}- at least one that shows you line numbers, highlights SQL syntax in colour, and respects your choice of name extension
@@ -424,9 +423,7 @@ Some editors, like notepad, add an extra .txt extension. You should find a bette
 
 Switch to the Oracle window and to the SQL Scripts option. Select 'Upload', locate the file you have just saved, and upload it.
 
-\subsection{}
-\subsection{}
-\subsection{Commenting SQL scripts}
+\section{Commenting SQL scripts}
 Comments can be included to clarify and explain an SQL statement or procedure. 
 
 The comment starts with /* and ends with */, preferably on their own lines, e.g.

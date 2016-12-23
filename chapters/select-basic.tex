@@ -179,12 +179,8 @@ Select
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{}
-\subsection{}
-\subsection{}
+
 B3\ \ Display the job title of all the employees.
-
-
 
 \begin{center}
   
@@ -208,7 +204,7 @@ Select
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{Using DISTINCT}
+\section{Using DISTINCT}
 It is not good practice to repeat values as part of the answer to such a question.  To remove duplicates within the result table, use the distinct keyword:
 
 \ \ SELECT DISTINCT col1 [ , col2 ... ]  FROM  table-name ;
@@ -232,7 +228,7 @@ Select
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{Simple calculations and column aliases}
+\section{Simple calculations and column aliases}
 It is also possible to manipulate the column values before displaying them: -
 
 
@@ -314,7 +310,7 @@ Select
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{The WHERE clause}
+\section{The WHERE clause}
 To SELECT specific rows from a single table the optional WHERE clause is used, for example:  Display all the customers in the Sheffield area:
 
 \ \ SELECT *
@@ -765,7 +761,7 @@ Select
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection[The ORDER BY clause]{The ORDER BY clause}
+\section[The ORDER BY clause]{The ORDER BY clause}
 The ORDER BY clause is used to control the display order of selected records
 
 ORDER BY\ \ col1 [ , col2 ... ]\ \ \ \ (first by col1, then by col2, etc.)
@@ -886,8 +882,8 @@ Select
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{}
-\subsection{Dates}
+
+\section{Dates}
 Within Oracle, dates are stored and may be used just like any other number column.  To match or enter a date the value must be enclosed in single quote marks, dates may be in one of the formats:
 
 \begin{center}

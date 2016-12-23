@@ -1,4 +1,4 @@
-\subsection{Group Functions}
+\section{Group Functions}
 SQL provides some simple aggregating functions that enable us to derive information about the rows in a table.
 
 COUNT(*) \ \ \ \ returns a single value, the number of rows in the table
@@ -133,7 +133,7 @@ Select
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{NULL Values}
+\section{NULL Values}
 If a column has no value for any particular row, it is referred to as having a NULL value. This is not the same as a zero in a numeric column, nor a space in a character column.  NULL can be used in the same way as a numeric or character value.
 
 
@@ -234,7 +234,7 @@ Select
 \end{flushleft}
 Hint:  if you check in the EMP table you should see that there are 10 such employees.  One employee has a zero commission, but that is a recorded value, and therefore should not be included in the count as it is not NULL.
 
-\subsection{The NVL Function}
+\section{The NVL Function}
 A further problem is that any calculation that includes a NULL value will always produce a NULL value.
 
 \ \ \ \ \ \ NVL(column, replacement\_value)
@@ -333,7 +333,7 @@ Select
 \\\hline
 \end{supertabular}
 \end{flushleft}
-\subsection{The GROUP BY clause}
+\section{The GROUP BY clause}
 The GROUP BY clause splits the table into specified groups according to the criteria specified, returning one summary row for each group.
 
 The following will list the sum of the account balances for each branch.

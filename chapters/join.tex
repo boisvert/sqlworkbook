@@ -1,6 +1,6 @@
 Relational databases consist of sets of tables designed to minimise data redundancy, possibly through the Normalisation process.  Data is therefore dispersed throughout those tables and, in order to solve a requirement, it will generally be necessary to bring together a number of fields from various related tables.  
 
-\subsection{Cartesian Product}
+\section{Cartesian Product}
 This is the result of using more than one table in an unstructured way (Oracle cannot automatically interpret and use anything about relationships between tables).  What results would you expect to obtain with the following  instruction?
 
 
@@ -60,7 +60,8 @@ D2\ \ SELECT ENAME, DNAME, DEPTNO
 \end{center}
 Most Database Management Systems now support the ANSI/ISO join syntax although some DBMSs, Oracle included, do continue to support their own non-standard formats.
 
-\clearpage\subsection{Equi Joins}
+\clearpage
+\section{Equi Joins}
 These joins, also called SIMPLE JOINS, are the most common form and return rows from two joined tables based upon an equality condition in an ON clause.
 
 \ \   SELECT\ \ column-list

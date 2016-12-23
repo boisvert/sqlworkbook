@@ -1,29 +1,43 @@
 % This file was converted to LaTeX by Writer2LaTeX ver. 1.4
 % see http://writer2latex.sourceforge.net for more info
-\documentclass{article}
+\documentclass{report}
 
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
+\usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage{amssymb,amsfonts,textcomp}
 \usepackage{array}
 \usepackage{supertabular}
 \usepackage{hhline}
 \usepackage{graphicx}
+\usepackage{listings}
+
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	left=15mm,
+	right=35mm,
+	top=20mm,
+	bottom=20mm,
+}
 
 \makeatletter
-
-\newcommand\arraybslash{\let\\\@arraycr}
+  \newcommand\arraybslash{\let\\\@arraycr}
 \makeatother
+
 \setlength\tabcolsep{1mm}
 \renewcommand\arraystretch{1.3}
 
 \title{BSc2 - COMPUTING PROGRAMME}
 
 \begin{document}
+\begin{flushleft}
+{\fontfamily{lmss}\selectfont
 
 \clearpage
+
 SQL WORKBOOK
 
 \section[BSc Computing Programmes]{BSc Computing Programmes}
@@ -35,7 +49,6 @@ This page is intentionally blank.
 
 \clearpage
 \section[BSc Computing Programme]{BSc Computing Programme}
-\section[]{}
 
 \begin{center}
 
@@ -265,35 +278,37 @@ The Page Header references throughout the workbook provide a broad pointer to th
 Note: Topics must be completed in order, each may use material/skills developed in a previous section.  Topics must be completed before the scheduled session of the next topic.
 
 \clearpage
-\section{INTRODUCTION}
+\chapter{INTRODUCTION}
 \include{chapters/intro}
 
-\section{SQL Lab Week 1}
+\chapter{SQL Lab Week 1}
 \include{chapters/week1}
 
-\section{the SELECT statement: Extracting Data}
+\chapter{the SELECT statement: Extracting Data}
 \include{chapters/select-basic}
 
-\section{Functions \& Grouping Data}
+\chapter{Functions \& Grouping Data}
 \include{chapters/function-group}
 
-\section{Joining tables}
+\chapter{Joining tables}
 \include{chapters/join}
 
-\section{The CREATE statement}
+\chapter{The CREATE statement}
 CREATING, DROPPING \& POPULATING TABLES
 \include{chapters/create}
 
-\section{Constraints, ALTERing tables, DELETE and UPDATING data}
+\chapter{Constraints, ALTERing tables, DELETE and UPDATING data}
 \include{chapters/alter-del-update}
 
-\section{table aliasing, Self Joins, outer joins}
+\chapter{table aliasing, Self Joins, outer joins}
 \include{chapters/self-outer}
 
-\section{VIEWS and SUBQUERIES}
+\chapter{VIEWS and SUBQUERIES}
 \include{chapters/views-subqueries}
 
-\section{Appendix: Functions and Data Control Language}
+\chapter{Appendix: Functions and Data Control Language}
 \include{chapters/appendix}
 
+} % end of fontfamily
+\end{flushleft}
 \end{document}
