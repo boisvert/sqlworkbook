@@ -1,0 +1,512 @@
+In this section you will learn the techniques to modify the contents and structure of a working database. As you do this a new problem arises: the risk of making mistakes and change, remove or add data incorrectly.
+
+To minimise such problems, relational databases support a system of rules to maintain data integrity. These rules aim to minimise mistakes when changing the database, because these can be very onerous for end users or administrators to correct.
+
+SQL includes When we wish to design the database, so that data integrity is enforceable, SQL includes the use of constraints.   constraint clauses to set data integrity rules. But constraint systems are a complex and sometimes demanding part of database management systems. A {\textquotedbl}perfect{\textquotedbl} relational DBMS should systematically enforce referential integrity, but in practice many current commercial systems, to remain efficient and flexible, simply ignore constraint clauses when they execute SQL. To be efficient and flexible, Relational Database Systems compromise with the {\textquotedbl}perfect{\textquotedbl} relational system in one important way: they do not systematically check, and enforce, data integrity.  Those e result is, that databases can allow users to delete important cross-referenced data, or to insert inconsistent values, and require : constantextra care from their users monitoring would be too cumbersome for the end-user.
+
+When we wish to design the database, so that data integrity is enforceable, SQL includes the use of constraints.  Many current commercial DBMSs compile this clause but then ignore it at execution time. ORACLE, since V9, onwards does implement this constraint clauses correctly.
+
+The cConstraints clauseare first  can be appliedgiven to a column (or group of columns) as part of the hrough CREATE andor ALTER TABLE statementss. Once in force, it is  The constraint is checked and applied when an INSERT, UPDATE or DELETE statement is run against that table, to see if the operation is valid..
+
+Semantic integrity constraints may be applied to :
+
+a single column in a table\ \ e.g.\ \ Salary must be greater than zero
+
+Branch must be 'Broomhill' or 'Tinsley'
+
+multiple columns in a table\ \ e.g.\ \ Start date must be greater than Birth date
+
+Sheffield area accounts must have a Ref No starting with 'A',
+
+multiple rows in a table\ \ e.g.\ \ Salary of employee must be less than salary of manager
+
+Existence Relational constraints enforce the relational model in your database. There are
+
+\begin{itemize}
+\item Primary key constraints, which imposes that the column(s) identified as primary key in your table only hold non-null, unique values (primary keys columns are also indexed for fast retrieval).
+\item Foreign key constraints, which apply to 2 or more rows in differenttwo tables: 
+\item the value of the foreign key column(s) must exist in the primary key in the corresponding table. For example, aA row in a {\textquotedbl}Customer Account{\textquotedbl} table cannot be created unless there is a corresponding row in the {\textquotedbl}Customer{\textquotedbl} table.
+\end{itemize}
+.\ \ identify a column(s) as the PRIMARY KEY
+
+apply to 2 or more rows in different tables:
+
+A row in a Customer Account table cannot be created unless there is a corresponding row in the Customer table.
+
+Semantic integrity constraints are checks chosen by the designers and users of the database, to support its correct use. For instance, the database administrator might set up these rules:
+
+may be applied to :
+
+\begin{itemize}
+\item Customer name must never be NULL
+\item Each product name is unique
+\item Employee sa single column in a table\ \ e.g.\ \ Salary must be greater than zero
+\item \end{itemize}
+Job sBranch must be 'Broomhill' or 'Tinsley'
+
+\begin{itemize}
+\item multiple columns in a table\ \ e.g.\ \ Start date must be greaterlater than  employee's bBirth date
+\item Sheffield areaA accounts must have a Ref No starting with the code of their branch{}'A',
+\item multiple rows in a table\ \ e.g.\ \ Salary of employee must be less than salary of manager
+\end{itemize}
+The constraint clause can be applied to a column (or group of columns) as part of the CREATE and ALTER TABLE statements.  The constraint is checked and applied when an INSERT, UPDATE or DELETE statement is run against that table.
+
+Constraints may impose the following combinations of rules :
+
+.\ \ require that the value of a column(s) is NOT NULL
+
+.\ \ require that the value of a column(s) is UNIQUE within the table
+
+.\ \ identify a column(s) as the PRIMARY KEY
+
+.\ \ identify a column(s) as the FOREIGN KEY; require the value of a column(s) to exist as a PRIMARY KEY in another table 
+
+.\ \ require the value in a column to conform to an expression (CHECK)
+
+Note :\ \ \ \ PRIMARY KEY is a superset of UNIQUE 
+
+\ \ \ \ UNIQUE also requires NOT NULL to be specified
+
+\ \ \ \ UNIQUE cannot be applied to PRIMARY KEY
+
+Primary Keys
+
+The easiest way to implement this constraints is as part of the field declarations in the CREATE statement.  Refer back to section A - 'Creating Tables' to refresh your knowledge of the basic CREATE statement.
+
+Consider the following two tables which are part or an Order Processing system.
+
+
+
+\begin{center}
+\begin{minipage}{3.387cm}
+ORDERLINE
+
+OrderNumber
+
+PartNo
+
+Quantity
+\end{minipage}
+\end{center}
+\begin{center}
+\begin{minipage}{3.387cm}
+ORDERHEAD
+
+OrderNumber
+
+OrderDate
+
+Customer
+\end{minipage}
+\end{center}
+[Warning: Draw object ignored][Warning: Draw object ignored][Warning: Draw object ignored]
+
+[Warning: Draw object ignored][Warning: Draw object ignored]
+
+The ORDER table has a primary key of OrderNumber, the ORDERLINE table has a compound primary key of OrderNumber and PartNo together, not two primary keys.
+
+The following statement could be used to create the ORDER table.
+
+CREATE TABLE ORDERHEAD
+
+\ \ (OrderNumber\ \ NUMBER(4)\ \ PRIMARY KEY,
+
+\ \  OrderDate\ \ \ \ DATE,
+
+\ \  Customer\ \ \ \ CHAR(12)) ;
+
+The constraint(s) may also be defined as separate clauses at the end of the CREATE statement but still within it e.g. at Table Level.  Note the commas, brackets and semi-colons.
+
+CREATE TABLE ORDERHEAD
+
+\ \ (OrderNumber\ \ NUMBER(4),
+
+\ \  OrderDate\ \ \ \ DATE,
+
+\ \  Customer\ \ \ \ CHAR(12),
+
+\ \  PRIMARY KEY \ \ (OrderNumber)) ;
+
+The ORDERLINE table has a Compound Primary Key.  These cannot be defined by specifying 'primary key' alongside two or more column definitions; they can only be defined at Table level, e.g.
+
+CREATE TABLE ORDERLINE
+
+\ \ (OrderNumber\ \ NUMBER(4) ,
+
+\ \  PartNo\ \ \ \ CHAR(12) ,
+
+\ \  Quantity\ \ \ \ NUMBER(5) ,
+
+\ \  PRIMARY KEY \ \ (OrderNumber, PartNo)) ;
+
+All of these constraints are referred to as being Anonymous (they have no name) and as such cannot be referenced within the data dictionary and by other statements such as ALTER.  This means that they cannot be ALTERed after the table has been CREATEd.  The table would need to be deleted, re-created and re-populated to change such constraints. 
+
+Any constraints may be Named (optional) so that it can be located in the data dictionary.  This is achieved by declaring CONSTRAINT and a unique constraint name.  This feature is only available at Table Level.
+
+CREATE TABLE ORDERHEAD
+
+\ \ (OrderNumber\ \ NUMBER(4)\ \ ,
+
+\ \  OrderDate\ \ \ \ DATE,
+
+\ \  Customer\ \ \ \ CHAR(12),
+
+\ \  CONSTRAINT ORDERHEAD\_PK \ \ PRIMARY KEY (OrderNumber) );
+
+
+\begin{center}
+  
+\includegraphics[width=1.076cm,height=0.917cm]{images/img (2).png}
+
+\end{center}
+All constraints are recorded in the table user\_constraints which is accessible like any other table through DESCRIBE and SELECT statements.
+
+F1\ \ Edit the three CREATE statements which implement the Accounting System tables to implement the primary keys.  (Note 1 - Do you remember SELECT * FROM TAB and DROP TABLE table\_name from earlier sections? Note 2 -- if you answered question E4, you have an earlier script to edit )
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+CREATE
+
+\\\hline
+CREATE
+
+\\\hline
+CREATE
+
+\\\hline
+\end{supertabular}
+\end{flushleft}
+F2\ \ Did you name the primary key constraints? Find the details of your tables from Oracle and check (or find out) the names of the three primary key constraints.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\\\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+\subsection{Foreign Keys}
+To establish referential integrity the column(s) in the related table must have Foreign Key references defined on them.  Foreign Keys can only be defined at Table level:-
+
+CREATE TABLE ORDERLINE
+
+\ \ ( OrderNumber\ \ NUMBER(4) ,
+
+\ \   PartNo\ \ \ \ CHAR(12) ,
+
+\ \   Quantity\ \ \ \ NUMBER(5) ,
+
+\ \   PRIMARY KEY \ \ (OrderNumber, PartNo),
+
+\ \   FOREIGN KEY \ \ (OrderNumber) 
+
+\ \ \ \ \ \ \ \ \ \ REFERENCES ORDERHEAD(OrderNumber) ) ;
+
+or
+
+CREATE TABLE ORDERLINE
+
+\ \ ( OrderNumber\ \ NUMBER(4) ,
+
+\ \   PartNo\ \ \ \ CHAR(12) ,
+
+\ \   Quantity\ \ \ \ NUMBER(5) ,
+
+\ \   PRIMARY KEY \ \ (OrderNumber, PartNo),
+
+\ \   CONSTRAINT ORDERLINE\_FK FOREIGN KEY (OrderNumber) 
+
+\ \ \ \ \ \ \ \ \ \ REFERENCES ORDERHEAD(OrderNumber) ) ;
+
+The ORDERLINE table (child table) must be created after the table named ORDER (parent table), and the ORDERHEAD table must have the referenced column defined as a Primary Key.
+
+F3\ \ The two statements below implement the ordering system. Draw the corresponding Entity-Relationship diagram; include the relationships made apparent by the foreign keys (reminder: in a one-to-many relationship, the foreign key is the many end).
+
+CREATE TABLE ORDERHEAD
+
+\ \ ( OrderNumber\ \ NUMBER(4)\ \ PRIMARY KEY,
+
+\ \   OrderDate\ \ \ \ DATE,
+
+\ \   Customer\ \ \ \ CHAR(12)) ;
+
+ CREATE TABLE ORDERLINE
+
+\ \ ( OrderNumber\ \ NUMBER(4) ,
+
+\ \   PartNo\ \ \ \ CHAR(12) ,
+
+\ \   Quantity\ \ \ \ NUMBER(5) ,
+
+\ \   PRIMARY KEY \ \ (OrderNumber, PartNo),
+
+\ \   FOREIGN KEY \ \ (OrderNumber) 
+
+\ \ \ \ \ \ \ \ \ \ REFERENCES ORDERHEAD(OrderNumber) ) ;
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{15.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+F4\ \ In what order should we create the three tables of the accounting system to take constraints into account?
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+F5\ \ Now re-create the three tables which implement the Accounting System.  Ensure that you have implemented the primary keys correctly and set up the referential integrity.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+CREATE
+
+\\\hline
+CREATE
+
+\\\hline
+CREATE
+
+\\\hline
+\end{supertabular}
+\end{flushleft}
+F6\ \ Insert new rows into the CUST, ACC and CUSTACC tables for an account opened today at the Tinsley branch for customer  {}`N Main' (number 'C371') with account number 1568273 and an opening balance of £989.59p.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+F7\ \ Given the relationships in the accounts system, in what order should the insert statements above run?
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+\subsection{}
+\subsection{}
+\subsection{The ALTER statement}
+The structure of an existing table can be altered at any time by adding table elements, modifying column definitions and dropping constraints.
+
+E.g. \ \ ALTER TABLE DEPT2
+
+\ \ ADD NO\_OF\_EMPLOYEES NUMBER(3) ;\ \ \ \ Creates a new column
+
+ \ \ ALTER TABLE DEPT2
+
+\ \ DROP COLUMN LOC ;\ \ \ \ \ \ \ \ \ \ Removes a column
+
+\ \ ALTER TABLE DEPT2
+
+\ \ MODIFY DEPTNO NUMBER(3) ;\ \ \ \ \ \ \ \ Changes the data type
+
+\ \ ALTER TABLE DEPT2
+
+\ \ DROP CONSTRAINT PK1;
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Removes a named constraint
+
+\ \ ALTER TABLE DEPT2
+
+\ \ ADD CHECK (LOC IN ('NEW YORK', 'DALLAS', 'CHICAGO', 'BOSTON') ;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Adds a CHECK constraint
+
+\ \ ALTER TABLE DEPT2 
+
+\ \ ADD CONSTRAINT PK1 PRIMARY KEY (DEPTNO) ;
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Adds a named constraint
+
+\ \ ALTER TABLE DEPT2
+
+\ \ MODIFY (DNAME NOT NULL) ;\ \ \ \ Requires a value in the column
+
+\ \ ALTER TABLE DEPT2
+
+\ \ MODIFY (DNAME NOT NULL, LOC NOT NULL) ;\ \ \ \ 
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ Requires a value in two columns
+
+\ \ ALTER TABLE DEPT2
+
+\ \ MODIFY (DNAME NULL) ;\ \ \ \ \ \ \ \ Does not require a value
+
+
+
+\begin{center}
+  
+\includegraphics[width=1.076cm,height=0.917cm]{images/img (2).png}
+
+\end{center}
+Note the lack of IS in these last three statements.
+
+F8\ \ This question returns to the order system of question F3. If we create the tables using the statements below
+
+CREATE TABLE ORDERHEAD
+
+\ \ ( OrderNumber\ \ NUMBER(4)
+
+\ \   OrderDate\ \ \ \ DATE,
+
+\ \   Customer\ \ \ \ CHAR(12)) ;
+
+ CREATE TABLE ORDERLINE
+
+\ \ ( OrderNumber\ \ NUMBER(4) ,
+
+\ \   PartNo\ \ \ \ CHAR(12) ,
+
+\ \   Quantity\ \ \ \ NUMBER(5) ) ;
+
+Write the alter statements needed so as to ensure:
+
+\begin{itemize}
+\item OrderNumber is the primary key of ORDERHEAD
+\item OrderDate is a date after 1st January 2000
+\item OrderNumber and PartNo are the primary key of ORDERLINE
+\item Quantity is at least 1
+\item The foreign key constraint from ORDERLINE to ORDER is implemented (you should research the correct syntax to add foreign key constraints) 
+\end{itemize}
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+\subsection{The DELETE and UPDATE statements}
+The DELETE statement is used to remove rows from a table.  This requires a WHERE clause to specify which rows are to be deleted:-
+
+\ \ DELETE 
+
+\ \ FROM \ \ DEPT
+
+\ \ WHERE \ \ DEPTNO = 60 ;
+
+Unlike INSERT which operates on one row at a time, DELETE will remove all the rows that satisfy the WHERE condition, and all rows from the table if there is no WHERE condition - so beware!
+
+F9\ \ The bank has decided that J Smith is no longer a customer.  Delete all the information about her from the database.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+Like table creation, the sequence of table deletion should reflect referential integrity rules: that is, child tables deleted before parent tables that they depend on.
+
+\begin{center}
+  
+\includegraphics[width=1.048cm,height=0.903cm]{images/img (2).png}
+
+\end{center}
+To change data values in the database use the UPDATE statement 
+
+UPDATE is similar to DELETE in that it can operate on a set of rows that meet a specific condition, not just a single row.
+
+\ \ UPDATE \ \ EMP
+
+\ \ SET \ \ \ \ MGR = 7839
+
+\ \ WHERE \ \ JOB = 'SALESMAN' ;
+
+F10\ \ J Best has moved to 31 Hanover Street, Chapeltown.  Amend the data in the Customer table to reflect this change.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+In Summary:-
+
+Deleting/Removing rows\ \ 
+
+\ \ DELETE
+
+\ \ FROM\ \ \ \ table\_name
+
+\ \ WHERE\ \ selection criteria ;
+
+Updating/Modifying columns\ \ 
+
+\ \ UPDATE\ \ table\_name
+
+\ \ SET\ \ \ \ column1 = field\_value1 [ ,
+
+\ \ \ \ \ \ column2 = field\_value2 ,  ... ]
+
+\ \ WHERE\ \ selection criteria ;
+
+F11\ \ The customer 'N Main' (inserted in exercise F6) forgot to tell you that their address is 45 North Road, Barnsley.  Add this data to the existing details.  
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+F12\ \ Following the annual interest rate changes, all the accounts have been awarded a 5\% interest bonus payment.  Reflect this change in the table ACC.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{14.663cm}|}
+\hline
+\\\hline
+\end{supertabular}
+\end{flushleft}
+This page is intentionally blank.

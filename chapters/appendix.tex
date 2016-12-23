@@ -1,0 +1,361 @@
+FUNCTIONS
+
+A function usually takes one or more parameters and converts or re-formats them to produce a new value.
+
+Functions fall into 4 categories:
+
+1.\ \ String Functions
+
+2.\ \ Arithmetic Functions
+
+3.\ \ Date Functions
+
+4.\ \ Aggregate or Group-Set Functions
+
+You have already encountered some of the last type e.g. MAX, MIN, AVG.  
+
+Many string functions also work on arithmetic and date arguments and ORACLE will perform an automatic conversion e.g. NVL 
+
+String Functions
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{m{5.9890003cm}m{9.801001cm}}
+string1  {\textbar} {\textbar}  string2 &
+Concatenates string1 with string2  EMPNO {\textbar} {\textbar} DEPTNO\\
+DECODE(col, colval, newval [,colval, newval] [, def]) &
+Translates discrete column values\\
+LENGTH(string) &
+Finds the number of characters in the string\\
+SUBSTR(str, stpos [, len]) &
+Extracts a number of characters from a string SUBSTR(ENAME, 1, 3)\\
+INSTR(str1, str2 [, spos]) &
+Finds the position of one string in another string INSTR(ENAME, `S')\\
+UPPER(string) &
+INSERT statement: permits only upper case characters to be used
+
+SELECT statement: Changes all characters to upper case UPPER(ENAME)\\
+LOWER(string) &
+INSERT statement: permits only lower case characters to be used
+
+SELECT statement: Changes all characters to lower case\\
+TO\_NUMBER(string) &
+Converts a character to a number\\
+TO\_DATE(str [, pict]) &
+Converts a Character String in a given format to a date.  Necessary for storing time in a Date field.\\
+SOUNDEX(string) &
+Converts phonetically similar strings to the same value\\
+VSIZE(string) &
+Finds the number of characters required to store the string\\
+LPAD(string, len[, chr]) &
+Left pads the string with fill characters\\
+RPAD(string, len[, chr]) &
+Right pads the string with fill characters\\
+INITCAP(string) &
+Capitalises the initial letter of every word in the string\\
+\end{supertabular}
+\end{flushleft}
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{m{5.9890003cm}m{9.801001cm}}
+REPLACE(string, from, to) &
+Replaces all the occurrences of the `from' with the `to'\\
+LTRIM(string, set) &
+Trims all characters in the set from the left of the string\\
+RTRIM(string, set) &
+Trims all characters in the set from the right of the string\\
+NVL(str1, str2) &
+Returns str2 if str1 is NULL, otherwise returns str1 NVL(JOB, `UNKNOWN')\\
+\end{supertabular}
+\end{flushleft}
+Arithmetic Functions
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{m{5.4900002cm}m{10.052cm}}
+GREATEST(object-list) &
+Returns the greatest of a list of values  GREATEST (SAL, COMM*4)\\
+LEAST(object-list) &
+Returns the smallest of a list of values\\
+POWER(number, e) &
+Raises the number to the e power (positive integer values for e only)\\
+ROUND(number[, d]) &
+Rounds the number to d digits right of the decimal point (d can be negative for left of decimal point) ROUND (SAL)\\
+ABS(number) &
+Absolute value of the number\\
+SIGN(number) &
++1 if number {\textgreater} 0, 0 if number = 0  {}-1 if number {\textless} 0\\
+MOD(num1, num2) &
+Remainder when num1 is divided by num2\\
+SQRT(number) &
+Returns the square root of the number; if the number is less than 0, then SQRT returns NULL\\
+TO\_CHAR (number[, picture]) &
+Converts a number to a character string in the format specified TO\_CHAR (SAL, `9999.99')\\
+DECODE (number....) &
+As for decode under string functions\\
+NVL(number, value) &
+As for NVL under string functions
+
+NVL(COMM,0)\\
+CEIL(number) &
+Rounds the number up to the nearest integer\\
+FLOOR(number) &
+Truncates the number to the nearest integer\\
+TRUNC(number[, d] &
+Truncates the number to d digits right of the decimal point (d can be negative)\\
+\end{supertabular}
+\end{flushleft}
+DATE  and TIME Functions
+
+A field of DATE type can hold both date and time within the single field.  Normal reference to the field will use only the date contents, the time details remaining hidden.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{m{6.743cm}m{8.799cm}}
+ADD\_MONTHS(date, number)  &
+Add a number of months to a date (number can be negative)
+
+ADD\_MONTHS(HIREDATE, 3)\\
+MONTHS\_BETWEEN(date1, date2) &
+Subtracts two dates to yield the difference in months
+
+MONTHS\_BETWEEN(SYSDATE, HIREDATE)\\
+LAST\_DAY(date) &
+Moves a date forward to last day of month\\
+NEXT\_DAY(date, day) &
+Moves a date forward to given day of the week  NEXT\_DAY(HIREDATE, `MONDAY') NEXT\_DAY(HIREDATE, 2) - Sunday is day 1\\
+ROUND(date[, precision]) &
+Rounds a date to a specified precision ROUND(HIREDATE, `MONTH)\\
+TRUNC(date[, precision]) &
+Truncates a date to a specified precision\\
+DECODE(date,...) &
+As under string functions\\
+NVL(date, value) &
+As under string functions\\
+TO\_CHAR(date, [picture]) &
+Outputs a date in the specified format, eg TO\_CHAR(HIREDATE, `YYYY  MM - DY')
+
+Outputs the time in the specified format, eg TO-CHAR(HIREDATE, 'hh24.mi' )\\
+\end{supertabular}
+\end{flushleft}
+TO\_CHAR is an especially useful function, and one that is well worth mastering.  The full set of date 'pictures' is listed below.
+
+Date Formats in Oracle DATE functions
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{m{2.531cm}m{12.1cm}}
+MM &
+Number of month in year  12\\
+RM &
+Roman numeral for month  XII\\
+MON (Mon) &
+3 letter abbreviation of month name  DEC (Dec)\\
+MONTH &
+Month fully spelled out  AUGUST\\
+DDD &
+Number of day in year since Jan 1\\
+DD &
+Number of day in month\\
+D &
+Number of day in week\\
+DY &
+3 letter abbreviation of day\\
+DAY &
+Day fully spelled\\
+YYYY &
+Full 4 digit year\\
+SYYYY &
+Signed year, 1000 BC = -1000\\
+YYY &
+Last 3 digits of year\\
+YY &
+Last 2 digits of year\\
+Y &
+Last 1 digit of year\\
+IYYY &
+4 digit year - ISO standard\\
+IYY &
+3 digit year - ISO standard\\
+IY &
+2 digit year - ISO standard\\
+I &
+1 digit year - ISO standard\\
+RR &
+Last 2 digits of year relative to current date\\
+YEAR &
+Year spelled out  NINETEEN NINETY SEVEN\\
+Q &
+Number of quarter in year\\
+WW &
+Number of week in year\\
+IW &
+Week in year - ISO\\
+W &
+Number of week in month\\
+J &
+Julian - days since Dec 31 4713 BC!!\\
+HH &
+Hour of the day  1-12\\
+HH12 &
+Same as HH\\
+HH24 &
+Hour of day on 24 hour clock\\
+MI &
+Minutes of the hour\\
+\end{supertabular}
+\end{flushleft}
+INDEXES
+
+ORACLE uses indexes to improve performance when accessing tables in the index column order orsearching for rows with specified index column values.
+
+However, an index slows down insertions, deletions and changes in indexed column values. Several indexes may be created on the same table using different columns. Null values are not indexed.
+
+CREATE INDEX \ \ name  
+
+ON \ \ \ \ \ \ table-name (column, ... );
+
+or
+
+CREATE UNIQUE INDEX \ \ name  
+
+ON \ \ \ \ \ \ \ \ table-name (column, ... );
+
+Example\ \ CREATE INDEX Customers ON CUST (Area, RefNo)
+
+This will create an index on the table CUST that will order the records alphabetically by area and then by reference number within each area.  It does not affect the sequence from a SELECT statement.
+
+i.e:-
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.116cm}m{3.557cm}m{3.557cm}m{3.555cm}|}
+\hline
+\multicolumn{1}{|m{2.116cm}|}{REFNO} &
+\multicolumn{1}{m{3.557cm}|}{NAME} &
+\multicolumn{1}{m{3.557cm}|}{ADDRESS} &
+AREA\\\hline
+C371 &
+R Done &
+23 Middle Avenue &
+Barnsley\\
+B127 &
+R Best &
+4 East Row &
+Rotherham\\
+B128 &
+J Best &
+4 East Row &
+Rotherham\\
+A123 &
+J Doe &
+1 High Street &
+Sheffield\\
+A124 &
+J Smith &
+2 West Street &
+Sheffield\\\hline
+\end{supertabular}
+\end{flushleft}
+Indexes are used to -
+
+a) speed up retrieval of rows from the table
+
+and/or
+
+b) enforce uniqueness on values in a column.
+
+\clearpage
+
+\section{DCL INSTRUCTIONS}
+\title{DCL - Data Control Language}
+\maketitle
+
+The function of the DCL is to protect the database against undesired changes.
+
+ACCESS RIGHTS
+
+Access to ORACLE in general is regulated via 'user privileges'.  The type of operations permitted on individual tables is regulated through object-related privileges.
+
+\subsection{User Privileges}
+Only the DBA may grant user privileges. There are 3 categories of user;
+
+DBA  \ \ \ \ may access any table
+
+\ \ \ \ grant/revoke user privileges
+
+\ \ \ \ monitor all tables \& access
+
+\ \ \ \ export data
+
+RESOURCE\ \ may create \& drop tables, indexes \& clusters
+
+\ \ \ \ grant \& revoke object-related privileges
+
+\ \ \ \ monitor access to the database (AUDIT command)
+
+CONNECT\ \ may load ORACLE
+
+\ \ \ \ look at other user's data provided SELECT privilege has been afforded 
+
+\ \ \ \ perform data manipulation on other user's tables provided they have the respective privilege
+
+\ \ \ \ create views and synonyms
+
+Format of command:
+
+ \ \ GRANT \ \ \{CONNECT RESOURCE {\textbar} DBA\}
+
+ \ \ TO \ \ \ \ username
+
+[IDENTIFIED BY password] ;
+
+Object-related Privileges : -
+
+Every table \& view has an owner.  If the DBA has given the owner the relevant privileges then the owner may grant other users privileges against these tables and views:-
+
+GRANT\ \ \{privilege;.. {\textbar} ALL\}
+
+ON\ \ \ \  table
+
+TO\ \ \ \ \{user {\textbar} PUBLIC \}
+
+[WITH GRANT OPTION ]
+
+The following privileges are then possible :-
+
+SELECT, INSERT, UPDATE, DELETE, ALTER, INDEX
+
+E.g. If user ORA5432 owns (or has been given the relevant privilege by the owner) a table called EMP1 and issues the command
+
+ GRANT SELECT ON EMP1 TO ORA1234 WITH GRANT OPTION
+
+then user ORA1234 will be able to extract information from table EMP1 and also to pass this privilege on to other users.
+
+To use this table, ORA1234 will have refer to the table EMP1 as ORA5432.EMP1 in the FROM statement of any query.
+
+NOTE - DCL also covers use of COMMIT \& ROLLBACK and table locking --
+
+e.g. \ \ LOCK TABLE EMP, DEPT
+
+ \ \ \ \ IN EXCLUSIVE MODE;
+
+The use of GRANT and REVOKE facilitates a team-based approach to database development. 

@@ -1,0 +1,363 @@
+Relational Database Systems should be easy to understand and to use.
+
+But it is not always convenient, or possible, to control them visually through a graphical interface.
+
+Instead most relational database systems use a standard, written language to control the database and to access the data: SQL (the {\textquotedbl}Structured Query Language{\textquotedbl}).
+
+Commands are typed a line at a time (at a {\textquotedbl}command line interface{\textquotedbl}) or saved in files to be executed in succession (in {\textquotedbl}batch{\textquotedbl}). It may surprise you if you are accustomed to graphical interfaces, rather than typed commands, but SQL is designed to be easy to learn and use.
+
+The commands are interpreted by a Database Management System (DBMS), usually running remotely on a server, to carry out the necessary functions. Here are some main functionalities and words used:
+
+\ \ {}- Create and modify a database structure: CREATE, DROP, ALTER
+
+\ \ {}- Operate on the data: SELECT, INSERT, UPDATE, DELETE 
+
+\ \ {}- Control who can access a database: GRANT, REVOKE
+
+One of the features that make SQL easy to use is that the language is declarative. This means that SQL contains the necessary commands to describe what you want to be done, but not how it should be done.
+
+For example this SQL command:
+
+\ \ SELECT * FROM EMPLOYEE;
+
+Means {\textquotedbl}find every row and every column from the employee table{\textquotedbl}. As you can see, the command focuses on the essentials (what you want) and ignores all the detail of procedure (what the system will do to get it).
+
+The details -{}-{}-exactly which files should be opened to find the data, how to look into them-{}-{}- are left entirely to the Database Management System, which executes the commands accurately and efficiently so we can focus on the data, rather than the technology. Most of the time, we will be able to work on the data and its structure while keeping the details of how a DBMS manages it all for another day.
+
+There are many database systems available. This booklet will teach you SQL by practicing on one of the best known DBMSs: Oracle. Being a relational database system, it holds data in tables.
+
+Before the work begins, the next two pages describe the data that the booklet uses for example queries.
+
+\clearpage
+\subsection{SAMPLE TABLES}
+Oracle creates and populates a set of default tables (EMP, DEPT and SALGRADE) for all new users. These are the Personnel System. All of the Exercises throughout this workbook are based on the Personnel System tables.
+
+Should data in the personnel tables become corrupt, they may be restored to their original status by issuing each of the following statements for the appropriate table:
+
+\ \ DROP TABLE EMP ;
+
+\ \ CREATE TABLE EMP AS SELECT * FROM EXAMPLE.EMP ;
+
+\subsection{The Personnel System}
+\subsubsection[Table: \ EMP]{Table:  EMP}
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{1.8cm}|m{2.0509999cm}|m{2.55cm}|m{1.301cm}|m{2.3009999cm}|m{1.798cm}|m{1.74cm}|m{1.858cm}|}
+\hline
+\centering EMPNO &
+\centering ENAME &
+\centering JOB &
+\centering MGR &
+\centering HIREDATE &
+\centering SAL &
+\centering COMM &
+\centering\arraybslash DEPTNO\\\hline
+ &
+ &
+ &
+ &
+ &
+ &
+ &
+\\
+\centering 7369 &
+SMITH &
+CLERK &
+\centering 7902 &
+17-DEC-80 &
+\raggedleft 800.00 &
+ &
+\centering\arraybslash 20\\
+\centering 7499 &
+ALLEN &
+SALESMAN &
+\centering 7698 &
+20-FEB-81 &
+\raggedleft 1600.00 &
+\raggedleft 300.00 &
+\centering\arraybslash 30\\
+\centering 7521 &
+WARD &
+SALESMAN &
+\centering 7698 &
+22-FEB-81 &
+\raggedleft 1250.00 &
+\raggedleft 500.00 &
+\centering\arraybslash 30\\
+\centering 7566 &
+JONES &
+MANAGER &
+\centering 7839 &
+02-APR-81 &
+\raggedleft 2975.00 &
+ &
+\centering\arraybslash 20\\
+\centering 7654 &
+MARTIN &
+SALESMAN &
+\centering 7698 &
+28-SEP-81 &
+\raggedleft 1200.00 &
+\raggedleft 1250.00 &
+\centering\arraybslash 30\\
+\centering 7698 &
+BLAKE &
+MANAGER &
+\centering 7839 &
+01-MAY-81 &
+\raggedleft 2850.00 &
+ &
+\centering\arraybslash 30\\
+\centering 7782 &
+CLARK &
+MANAGER &
+\centering 7839 &
+09-JUN-81 &
+\raggedleft 2450.00 &
+ &
+\centering\arraybslash 10\\
+\centering 7788 &
+SCOTT &
+ANALYST &
+\centering 7566 &
+09-DEC-82 &
+\raggedleft 3000.00 &
+ &
+\centering\arraybslash 20\\
+\centering 7839 &
+KING &
+PRESIDENT &
+ &
+17-NOV-81 &
+\raggedleft 5000.00 &
+ &
+\\
+\centering 7844 &
+TURNER &
+SALESMAN &
+\centering 7698 &
+08-SEP-81 &
+\raggedleft 1500.00 &
+\raggedleft 0.00 &
+\centering\arraybslash 30\\
+\centering 7876 &
+ADAMS &
+CLERK &
+\centering 7788 &
+12-JAN-83 &
+\raggedleft 1100.00 &
+ &
+\centering\arraybslash 20\\
+\centering 7900 &
+JAMES &
+CLERK &
+\centering 7698 &
+03-DEC-81 &
+\raggedleft 950.00 &
+ &
+\centering\arraybslash 30\\
+\centering 7902 &
+FORD &
+ANALYST &
+\centering 7566 &
+03-DEC-81 &
+\raggedleft 3000.00 &
+ &
+\centering\arraybslash 20\\
+\centering 7934 &
+MILLER &
+CLERK &
+\centering 7782 &
+23-JAN-82 &
+\raggedleft 1300.00 &
+ &
+\centering\arraybslash 10\\\hline
+\end{supertabular}
+\end{flushleft}
+\subsubsection[Table: \ DEPT]{Table:  DEPT}
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.047cm}|m{3.3009999cm}|m{2.802cm}|}
+\hline
+\centering DEPTNO &
+\centering DNAME &
+\centering\arraybslash LOC\\\hline
+ &
+ &
+\\
+\centering 10 &
+ACCOUNTING &
+NEW YORK\\
+\centering 20 &
+RESEARCH &
+DALLAS\\
+\centering 30 &
+SALES &
+CHICAGO\\
+\centering 40 &
+OPERATIONS &
+BOSTON\\\hline
+\end{supertabular}
+\end{flushleft}
+\subsubsection[Table: \ SALGRADE]{Table:  SALGRADE}
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.049cm}|m{2.552cm}|m{2.299cm}|}
+\hline
+\centering GRADE &
+\centering LOSAL &
+\centering\arraybslash HISAL\\\hline
+ &
+ &
+\\
+\centering 1 &
+\raggedleft 700.00 &
+\raggedleft\arraybslash 1200.00\\
+\centering 2 &
+\raggedleft 1201.00 &
+\raggedleft\arraybslash 1400.00\\
+\centering 3 &
+\raggedleft 1401.00 &
+\raggedleft\arraybslash 2000.00\\
+\centering 4 &
+\raggedleft 2001.00 &
+\raggedleft\arraybslash 3000.00\\
+\centering 5 &
+\raggedleft 3001.00 &
+\raggedleft\arraybslash 9999.00\\\hline
+\end{supertabular}
+\end{flushleft}
+Several worked examples in this book are based on part of an Accounting System. They use three tables, CUST, CUSTACC and ACC. These tables represent the fact that a customer may have many accounts, and that an account may be held jointly by more than one customer. Details of these tables follow. 
+
+The accounting system is not installed in your account; you will create it later in the book, but until you do, you can't test queries that use it, only work out what they would do.
+
+\begin{center}
+\includegraphics[width=1.06cm,height=0.903cm]{images/img (2).png}
+
+\end{center}
+\subsection{The Accounting System}
+
+\begin{center}
+\begin{minipage}{3.694cm}
+CUST
+\end{minipage}
+\end{center}
+\begin{center}
+\begin{minipage}{3.694cm}
+ACC
+\end{minipage}
+\end{center}
+\begin{center}
+\begin{minipage}{3.81cm}
+CUSTACC
+\end{minipage}
+\end{center}
+\begin{minipage}{2.515cm}
+Allocated
+\end{minipage}
+\begin{center}
+\begin{minipage}{1.997cm}
+Owns
+\end{minipage}
+\end{center}
+
+Table:  CUST
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.2389998cm}|m{2.55cm}|m{4.053cm}|m{2.799cm}|}
+\hline
+REFNO &
+NAME &
+ADDRESS &
+AREA\\\hline
+A123 &
+J Doe &
+1 High Street &
+Sheffield\\
+A124 &
+J Smith &
+2 West Street &
+Sheffield\\
+B127 &
+R Best &
+4 East Row &
+Rotherham\\
+B128 &
+J Best &
+4 East Row &
+Rotherham\\
+C371 &
+R Done &
+23 Middle Avenue &
+Barnsley\\\hline
+\end{supertabular}
+\end{flushleft}
+Table:  CUSTACC
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.3009999cm}|m{2.299cm}|}
+\hline
+REFNO &
+ACCNO\\\hline
+A123 &
+1245890\\
+A123 &
+1494315\\
+B127 &
+5418490\\
+B128 &
+5418490\\\hline
+\end{supertabular}
+\end{flushleft}
+Table:  ACC
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.3009999cm}|m{2.486cm}|m{2.8cm}|m{2.799cm}|m{2.802cm}|}
+\hline
+ACCNO &
+BALANCE &
+BRANCH &
+OPENED &
+BONUS\\\hline
+1245890 &
+\raggedleft 234.50 &
+Broomhill &
+12 Nov 2003 &
+\raggedleft\arraybslash 100.00\\
+1494315 &
+\raggedleft 0.50 &
+Tinsley &
+15 Dec 1999 &
+\raggedleft\arraybslash 0.00\\
+5418490 &
+\raggedleft 1789.40 &
+Broomhill &
+6 May 1988 &
+\\\hline
+\end{supertabular}
+\end{flushleft}
+This page is intentionally blank.
+
+\clearpage
+
