@@ -13,8 +13,8 @@
 \usepackage{hhline}
 \usepackage{graphicx}
 \usepackage{listings}
-
 \usepackage{geometry}
+
 \geometry{
 	a4paper,
 	left=15mm,
@@ -26,6 +26,12 @@
 \makeatletter
   \newcommand\arraybslash{\let\\\@arraycr}
 \makeatother
+
+\lstset{
+	language=SQL,
+	basicstyle=\ttfamily,
+	xleftmargin=1cm
+}
 
 \setlength\tabcolsep{1mm}
 \renewcommand\arraystretch{1.3}

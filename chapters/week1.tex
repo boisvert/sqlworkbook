@@ -193,11 +193,14 @@ You are now ready to issue SQL statements.
 \begin{itemize}
 \item Now type in the following commands or statements exactly as presented
 \end{itemize}
+
 Try this:
 
-SELECT  *  from EMP; 
+\begin{lstlisting}
+SELECT * from EMP;
+\end{lstlisting}
+
 \includegraphics[width=0.947cm,height=0.607cm]{images/img (9).png}
- 
 
 The command should return the contents of the EMP table (example result over the page).
 
@@ -216,29 +219,37 @@ Now try these alternatives, one at a time. Clear the upper part of the screen be
 
 Do lower case commands work? Clear the last command and type
 
-select  *  from emp; 
+\begin{lstlisting}
+select * from emp; 
+\end{lstlisting}
+
 \includegraphics[width=0.947cm,height=0.607cm]{images/img (9).png}
- 
 
 and (you don't have to retype, edit the previous command):
 
-Select  *  from EmP; 
+\begin{lstlisting}
+Select  *  from EmP;
+\end{lstlisting}
+
 \includegraphics[width=0.947cm,height=0.607cm]{images/img (9).png}
- 
+
 
 Is white space -- new lines, spaces -- allowed in commands? Try
 
-select  *  from  
-\includegraphics[width=1.63cm,height=0.683cm]{images/img (8).png}
- 
 
- emp; 
-\includegraphics[width=0.947cm,height=0.607cm]{images/img (9).png}
+\begin{lstlisting}
+select * from  
+
+
+
+emp; 
+\end{lstlisting}
  
+\includegraphics[width=1.63cm,height=0.683cm]{images/img (8).png}
+
+\includegraphics[width=0.947cm,height=0.607cm]{images/img (9).png}
 
 You may wish to discuss your conclusions with a colleague. Keep notes of what you find out - about the use of case, of white space, any errors you have to deal with and how you resolve them.
-
-
 
 \begin{center}
   
@@ -253,51 +264,50 @@ Note: the techniques that follow are ORACLE-specific, and wouldn't work as such 
 
 Now enter all of the following before pressing the Run button:
 
-\ \ select * from emp;  
-\includegraphics[width=1.63cm,height=0.683cm]{images/img (8).png}
- 
 
-\ \ select * from dept;
+\begin{lstlisting}
+select * from emp;  
+
+select * from dept;
+\end{lstlisting}  
+
+\includegraphics[width=1.63cm,height=0.683cm]{images/img (8).png}
 
 \begin{center}
-  
+
 \includegraphics[width=10.137cm,height=3.044cm]{images/img (11).png}
 
 \end{center}
+
 You now have an error message.  Unfortunately the message is unhelpful. SQL statements are correctly separated with a ; (semi-colon), but  from the SQL workshop, Oracle cannot run both statements in succession. One solution is to first highlight the statement you wish to run:
 
 Highlight the first 'select * from emp;' and press the run button.  You should recognise the results.
 
 \section{Checking the objects available}
 
-
 \begin{center}
-  
 \includegraphics[width=9.35cm,height=4.944cm]{images/img (12).png}
-
 \end{center}
+
 Try this:
 
-\emph{DESCRIBE table\_name;}
+\begin{lstlisting}
+DESCRIBE EMP;
+\end{lstlisting}
 
-is a useful command. It displays a table definition, e.g.
-
-\ \ DESCRIBE\ \ EMP;
-
-gives the result on the right.
-
-
+\emph{DESCRIBE table\_name;} is a useful command. It displays a table definition, e.g. the result on the right.
 
 \begin{center}
-  
 \includegraphics[width=8.751cm,height=5.309cm]{images/img (13).png}
-
 \end{center}
+
 Now move to the 'Home{\textgreater}SQL Workshop' screen and select the 'Object browser' feature. It shows details of all the tables, views and other objects that exist within your Oracle environment. 
 
 Finally, the following gives details of the tables and views you currently own:
 
+\begin{lstlisting}
 SELECT  *  from TAB;
+\end{lstlisting}
 
 ORACLE has a data dictionary that holds details of the database definition and its environment.  The query returns those details, as if {\textquotedbl}TAB{\textquotedbl} was a table of your tables.
 
@@ -319,26 +329,37 @@ SQL statements are made of multiple clauses. As they are sometimes difficult to 
 \begin{itemize}
 \item Anything that needs to be replace is in italics; example:
 \end{itemize}
-\ \ SELECT * FROM table
+
+\begin{lstlisting}
+SELECT * FROM table
+\end{lstlisting}
 
 table is actually not the word to type, but a word to substitute replace by the name of the actual table you want.
 
 \begin{itemize}
 \item Optional elements are included in [square brackets] [ ], are optional. Ffor example:
 \end{itemize}
-\ \   \ \ SELECT * FROM table [ WHERE Criteria ] ;
 
-cWhich indicates that the section {}``WHERE Criteria{}'' is ould be either:\ \ SELECT * FROM table ;
+\begin{lstlisting}
+SELECT * FROM table [ WHERE Criteria ] ;
+\end{lstlisting}
 
-\ \ or\ \ \ \ \ \ SELECT * FROM table WHERE Criteria ;
+Which indicates that the section {}``WHERE Criteria{}'' is ould be either:
 
+\begin{lstlisting}
+SELECT * FROM table ;
+\end{lstlisting}
 
+or
+
+\begin{lstlisting}
+SELECT * FROM table WHERE Criteria ;
+\end{lstlisting}
 
 \begin{center}
-  
 \includegraphics[width=1.048cm,height=0.903cm]{images/img (2).png}
-
 \end{center}
+
 in option.
 
 Don't type the square brackets! The same is true of the other signs below the other notation signs below.
@@ -346,14 +367,20 @@ Don't type the square brackets! The same is true of the other signs below the ot
 \begin{itemize}
 \item Optional repetition is marked using ... as follows:
 \end{itemize}
-\ \   SELECT col1 [ , col2 ... ]  FROM table  [ WHERE Criteria ] ;
+
+\begin{lstlisting}
+SELECT col1 [ , col2 ... ]  FROM table  [ WHERE Criteria ] ;
+\end{lstlisting}
 
 This means that there can be one or more columns.
 
 \begin{itemize}
 \item Finally, we use and the vertical bar {\textbar} (also called the pipe symbol) and if need be, braces \{ \} to denote alternatives:
 \end{itemize}
- SELECT \{ * {\textbar} columns-list \} FROM table ;
+
+\begin{lstlisting}
+SELECT {*|columns-list} FROM table ;
+\end{lstlisting}
 
 Means that you can use either a list of columns, or the * with this statement.
 
